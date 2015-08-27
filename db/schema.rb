@@ -13,12 +13,16 @@
 
 ActiveRecord::Schema.define(version: 20150827064521) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "messages", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "subject"
     t.text     "body"
-    t.string   "from"
-    t.string   "to"
+    t.string   "from",       array: true
+    t.string   "to",         array: true
+    t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
