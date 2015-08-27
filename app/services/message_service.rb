@@ -1,3 +1,5 @@
+require 'fileutils'
+
 class MessageService
 
 	# Create or initialize message logger
@@ -12,7 +14,7 @@ class MessageService
   		retriever_method :pop3, :address    => "pop.gmail.com",
 		                          :port       => 995,
 		                          :user_name  => 'oleole7177',
-		                          :password   => '',
+		                          :password   => 'olegoleg89',
 		                          :enable_ssl => true
 			end
 	end
@@ -28,7 +30,11 @@ class MessageService
 			mails = Mail.all
 
 			mails.each do |mail|
-				Message.create!(from: mail.from, to: mail.to, body: mail.body, date: mail.date)
+				message = Message.create!(from: mail.from, to: mail.to, body: mail.body, date: mail.date)
+			
+				mail.attachments.each do |attachment|
+					save_attachment attachment
+				end
 			end
 
 		rescue Net::POPAuthenticationError => e
@@ -40,5 +46,23 @@ class MessageService
 		
 		error
 	end
+
+	# Save attachment to attachments folder, 
+	# name of the attachment is updated with timestamp 
+	def self.save_attachment attachment
+		attachment_dir = File.join("#{Rails.root}", 'attachments')
+
+		unless File.directory?(attachment_dir)
+  		FileUtils.mkdir_p(attachment_dir)
+		end
+
+		new_filename = "#{Time.zone.now.to_i}_" + attachment.filename 
+
+    File.open(attachment_dir + '/'+ new_filename, "w+b", 0644) do |f|
+    	f.write attachment.body.decoded
+  	end
+
+  	
+  end
 
 end
