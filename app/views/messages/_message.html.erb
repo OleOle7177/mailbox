@@ -1,0 +1,8 @@
+	<tr>
+		<td>
+			<%= message.from.map { |f| "#{f}"}.join(", ") if message.from.present? %>
+		</td>
+
+		<td><%= message.subject || 'Тема письма отсутствует' %></td>
+		<td><%= message.date.strftime('%H:%M %d.%m.%Y') if message.date.present? %></td>
+	</tr>

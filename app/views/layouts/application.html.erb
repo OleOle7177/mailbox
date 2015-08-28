@@ -8,7 +8,15 @@
 </head>
 <body>
 
-<%= yield %>
+	<% if user_signed_in? %>
+		<%= render 'shared/menu' %>
+	<% end %>
+
+	<div class = "container">
+		<%= render 'shared/flash' %>
+
+		<%= yield %>
+	</div>
 
 </body>
 </html>

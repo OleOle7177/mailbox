@@ -1,0 +1,12 @@
+<table class="table table-striped">
+	<th class="col-xs-2">From</th>
+	<th class="col-xs-8">Subject</th>
+	<th class="col-xs-2">Date</th>
+	<%= render @messages %>
+</table>
+
+<div class="text-center">
+	<div class="pagination">
+		<%= will_paginate @messages, renderer: BootstrapPagination::Rails %>
+	</div>
+</div>
