@@ -4,5 +4,7 @@ Rails.application.routes.draw do
 
 	root to: "messages#index"  
   resources :messages, only: [:index, :show]
+
+  get 'download_attachment', to: 'messages#download_attachment'
  
 end

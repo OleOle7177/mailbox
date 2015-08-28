@@ -9,11 +9,11 @@
 <body>
 
 	<% if user_signed_in? %>
-		<%= render 'shared/menu' %>
+		<%= render partial: 'shared/menu' %>
 	<% end %>
 
 	<div class = "container">
-		<%= render 'shared/flash' %>
+		<%= render partial: "shared/flash_messages", flash: flash %> 
 
 		<%= yield %>
 	</div>

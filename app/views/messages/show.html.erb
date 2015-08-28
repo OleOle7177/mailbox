@@ -1,0 +1,12 @@
+<address>
+  <strong>Full Name</strong><br>
+  <a href="mailto:#">first.last@example.com</a>
+</address>
+
+<blockquote>
+  @message.body
+</blockquote>
+
+<%= @message.documents.each do |doc| %>
+	<%= link_to doc.attachment_file_name, doc.attachment.url %>
+<% end %>
