@@ -25,4 +25,8 @@ class MessagesController < ApplicationController
 		@message = Message.find(params[:id])
 	end
 
+	def download_attachment
+		send_file params[:path]
+	end
+
 end

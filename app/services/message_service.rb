@@ -30,7 +30,9 @@ class MessageService
 			mails = Mail.all
 
 			mails.each do |mail|
-				message = Message.create!(user_id: user_id, from: mail.from, to: mail.to, body: mail.body, date: mail.date)
+				message = Message.create!(user_id: user_id, from: mail.from, 
+																	to: mail.to, body: mail.parts[0].body.decoded, 
+																	date: mail.date, subject: mail.subject)
 			
 				mail.attachments.each do |attachment|
 					filename = save_attachment attachment

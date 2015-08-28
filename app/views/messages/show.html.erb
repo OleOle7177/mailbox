@@ -1,12 +1,20 @@
 <address>
-  <strong>Full Name</strong><br>
-  <a href="mailto:#">first.last@example.com</a>
+  <strong>From:</strong><br>
+  <%= @message.from.map { |f| "#{f}"}.join(", ") if @message.from.present? %><br><br>
+
+  <strong>To:</strong><br>
+  <%= @message.from.map { |f| "#{f}"}.join(", ") if @message.to.present? %><br><br>
+  
+  <strong>Date:</strong><br>
+	<%= @message.date.strftime('%H:%M %d.%m.%Y') if @message.date.present? %><br><br>
 </address>
 
 <blockquote>
-  @message.body
+  <%= @message.body.html_safe %>
 </blockquote>
 
-<%= @message.documents.each do |doc| %>
-	<%= link_to doc.attachment_file_name, doc.attachment.url %>
+<% if @message.documents.present? %>
+	<%= @message.documents.each do |doc| %>
+		<%= link_to doc.attachment_file_name, "/download_attachment?path=#{doc.attachment.path}" %>
+	<% end %>
 <% end %>
