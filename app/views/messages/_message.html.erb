@@ -4,5 +4,5 @@
 		</td>
 
 		<td><%= link_to message.subject || 'Тема письма отсутствует', message_path(message) %></td>
-		<td><%= message.date.strftime('%H:%M, %d.%m.%Y') if message.date.present? %></td>
+		<td><%= message.date.in_time_zone.strftime('%H:%M, %d.%m.%Y') if message.date.present? %></td>
 	</tr>

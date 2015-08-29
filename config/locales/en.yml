@@ -38,5 +38,3 @@ en:
   refresh_mails:
     connection_refused: "Connection refused: authentication error."
     successfully_updated: "Successfully updated."
-
-

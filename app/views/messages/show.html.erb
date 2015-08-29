@@ -9,7 +9,7 @@
   <%= @message.subject %><br><br>
   
   <strong><%= Message.human_attribute_name(:date)%></strong>
-	<%= @message.date.strftime('%H:%M, %d.%m.%Y') if @message.date.present? %><br><br>
+	<%= @message.date.in_time_zone.strftime('%H:%M, %d.%m.%Y') if @message.date.present? %><br><br>
 </address>
 
 <blockquote>
