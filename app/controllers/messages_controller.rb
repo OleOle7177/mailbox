@@ -8,16 +8,16 @@ class MessagesController < ApplicationController
 			errors = service.refresh_mail_list(current_user.id)
 			
 			if errors.present?
-				flash[:error] = 'Connection refused'
+				flash[:error] = t 'refresh_mails.connection_refused.'
 			else 
-				flash[:success] = 'Successfully updated'
+				flash[:success] = t 'refresh_mails.successfully_updated.'
 			end
 
 			flash.discard  
 		end
 
 		@messages = Message.current_user(current_user.id)
-											 .paginate(:page => params[:page], :per_page => 2)
+											 .paginate(:page => params[:page], :per_page => 50)
 
 	end
 

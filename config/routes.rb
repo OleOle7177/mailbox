@@ -1,10 +1,17 @@
 Rails.application.routes.draw do
 
-  devise_for :users, controllers: {sessions: "users/sessions", registrations: "users/registrations"}
+  scope ":locale", locale: /#{I18n.available_locales.join("|")}/ do
 
-	root to: "messages#index"  
-  resources :messages, only: [:index, :show]
+	  devise_for :users, controllers: {sessions: "users/sessions", registrations: "users/registrations"}
 
-  get 'download_attachment', to: 'messages#download_attachment'
- 
+		root to: "messages#index"  
+
+	  resources :messages, only: [:index, :show] do 
+	    get 'download_attachment', on: :collection
+	 	end
+	end
+
+	get '*path', to: redirect("/#{I18n.default_locale}/%{path}")
+	get '', to: redirect("/#{I18n.default_locale}")
+
 end

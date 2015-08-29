@@ -1,19 +1,23 @@
 <div class='navbar navbar-default'>
 	<div class='container'>
-		<%= link_to current_user.email, root_path, { class: "navbar-brand" } %>
+		<% if user_signed_in? %>
+			<%= link_to current_user.email, root_path, { class: "navbar-brand" } %>
+		<% end %>
 
-		<ul class='nav navbar-nav navbar-right'>
-			<li>
-			  <%= link_to('Sign out', destroy_user_session_path, :method => :delete) %>        
-			</li>
-			
-			<li>
-				<p class="navbar-btn">
-					<%= link_to 'Refresh', "/?refresh=true", { class: "btn btn-primary" } %>
-				</p>
-			</li>
+			<ul class='nav navbar-nav navbar-right'>
+				<% if user_signed_in? %>
+					<li><%= link_to( t("devise.sign_out"), destroy_user_session_path, :method => :delete) %></li>
+				<% end %>
 
-		</ul>
+				<li><%= link_to_unless_current 'English', locale: 'en' %></li>
+				<li><%= link_to_unless_current 'Russian', locale: 'ru' %></li>
+
+				<% if user_signed_in? %>
+					<li><p class="navbar-btn">
+						<%= link_to t('refresh'), "#{root_path}?refresh=true", { class: "btn btn-primary" } %>
+					</p></li>
+				<% end %>
+			</ul>
 
 	</div> 
 </div>

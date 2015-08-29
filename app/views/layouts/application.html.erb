@@ -8,10 +8,7 @@
 </head>
 <body>
 
-	<% if user_signed_in? %>
-		<%= render partial: 'shared/menu' %>
-	<% end %>
-
+	<%= render partial: 'shared/menu' %>
 	<div class = "container">
 		<%= render partial: "shared/flash_messages", flash: flash %> 
 		<%= yield %>
