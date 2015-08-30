@@ -4,7 +4,7 @@ class MessageService
 
 	# Create or initialize message logger
 	def message_logger
-    @@message_logger ||= Logger.new("#{Rails.root}/log/message.log")
+    @@message_logger ||= Logger.new("#{Rails.root}/log/mail.log")
   end
 
 		
