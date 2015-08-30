@@ -274,3 +274,5 @@ ru:
   refresh_mails:
     connection_refused: "Ошибка соединения: отказано в доступе."
     successfully_updated: "Список писем успешно обновлен."
+  back: "назад"
+  next: "вперед"

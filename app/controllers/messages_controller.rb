@@ -17,7 +17,7 @@ class MessagesController < ApplicationController
 		end
 
 		@messages = Message.current_user(current_user.id)
-											 .paginate(:page => params[:page], :per_page => 50)
+											 .paginate(:page => params[:page], :per_page => 2)
 
 	end
 

@@ -8,7 +8,7 @@
 
 	<div class="text-center">
 		<div class="pagination">
-			<%= will_paginate @messages, renderer: BootstrapPagination::Rails %>
+			<%= will_paginate @messages, renderer: BootstrapPagination::Rails, previous_label: t('back'), next_label: t('next') %>
 		</div>
 	</div>
 </div>
