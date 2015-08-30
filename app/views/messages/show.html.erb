@@ -19,7 +19,7 @@
 
   <% if @message.documents.present? %>
   	<% @message.documents.each do |doc| %>
-  		<%= link_to doc.attachment_file_name, "/messages/download_attachment?path=#{doc.attachment.path}" %><br>
+      <%= link_to doc.attachment_file_name, :controller => "messages", action: "download_attachment", path: doc.attachment.path %><br>
   	<% end %>
     <br>
   <% end %>

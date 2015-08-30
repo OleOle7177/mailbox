@@ -52,10 +52,10 @@ class MessageService
 
 	private
 
-	# Save attachment to attachments folder, 
+	# Save attachment to storage folder, 
 	# name of the attachment is updated with timestamp 
 	def save_attachment attachment
-		attachment_dir = File.join("#{Rails.root}", 'attachments')
+		attachment_dir = File.join("#{Rails.root}", 'storage')
 
 		unless File.directory?(attachment_dir)
   		FileUtils.mkdir_p(attachment_dir)
