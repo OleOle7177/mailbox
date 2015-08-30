@@ -4,12 +4,5 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :rememberable, :trackable, :validatable
 
-  before_create :puts_password 
-
-  private
-
-  def puts_password 
-  	p self.password
-  end
-
+  has_many :messages
 end

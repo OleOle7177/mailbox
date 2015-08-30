@@ -1,24 +1,26 @@
-<address>
-  <strong><%= Message.human_attribute_name(:from)%>:</strong>
-  <%= @message.from.map { |f| "#{f}"}.join(", ") if @message.from.present? %><br><br>
+<div class="wrapper">
+  <address>
+    <strong><%= Message.human_attribute_name(:from)%>:</strong>
+    <%= @message.from.map { |f| "#{f}"}.join(", ") if @message.from.present? %><br><br>
 
-  <strong><%= Message.human_attribute_name(:to)%>:</strong>
-  <%= @message.to.map { |f| "#{f}"}.join(", ") if @message.to.present? %><br><br>
+    <strong><%= Message.human_attribute_name(:to)%>:</strong>
+    <%= @message.to.map { |f| "#{f}"}.join(", ") if @message.to.present? %><br><br>
 
-  <strong><%= Message.human_attribute_name(:subject)%>:</strong>
-  <%= @message.subject %><br><br>
-  
-  <strong><%= Message.human_attribute_name(:date)%></strong>
-	<%= @message.date.in_time_zone.strftime('%H:%M, %d.%m.%Y') if @message.date.present? %><br><br>
-</address>
+    <strong><%= Message.human_attribute_name(:subject)%>:</strong>
+    <%= @message.subject %><br><br>
+    
+    <strong><%= Message.human_attribute_name(:date)%></strong>
+  	<%= @message.date.in_time_zone.strftime('%H:%M, %d.%m.%Y') if @message.date.present? %><br><br>
+  </address>
 
-<blockquote>
-  <%= @message.body.html_safe %>
-</blockquote>
+  <blockquote>
+    <%= @message.body.html_safe %>
+  </blockquote>
 
-<% if @message.documents.present? %>
-	<% @message.documents.each do |doc| %>
-		<%= link_to doc.attachment_file_name, "/messages/download_attachment?path=#{doc.attachment.path}" %><br>
-	<% end %>
-  <br>
-<% end %>
+  <% if @message.documents.present? %>
+  	<% @message.documents.each do |doc| %>
+  		<%= link_to doc.attachment_file_name, "/messages/download_attachment?path=#{doc.attachment.path}" %><br>
+  	<% end %>
+    <br>
+  <% end %>
+</div>

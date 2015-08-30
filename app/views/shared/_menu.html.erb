@@ -16,7 +16,7 @@
 				
 				<% if user_signed_in? %>
 					<li><p class="navbar-btn">
-						<%= link_to t('refresh'), "#{root_path}?refresh=true", { class: "btn btn-primary" } %>
+						<%= link_to t('refresh'), "#{root_path}?refresh=true", { id: 'refresh', class: "btn btn-primary" } %>
 					</p></li>
 				<% end %>
 			</ul>
