@@ -4,8 +4,12 @@ class MessagesController < ApplicationController
 
 	def index 
 		if params[:refresh] == 'true'
+			auth = session["devise.google_data"]
+			email = auth["info"]["email"]
+			access_token = auth["credentials"]["token"]
+
 			service = MessageService.new
-			errors = service.refresh_mail_list(current_user.id)
+			errors = service.refresh_mail_list(email, access_token, current_user.id)
 			
 			if errors.present?
 				flash[:error] = t 'refresh_mails.connection_refused.'

@@ -28,7 +28,8 @@ gem 'paperclip'
 gem 'will_paginate', '~> 3.0.6'
 gem 'will_paginate-bootstrap'
 gem 'devise'
-gem "omniauth-google-oauth2"
+gem 'omniauth-google-oauth2'
+gem 'gmail_xoauth'
 
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS

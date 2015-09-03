@@ -8,42 +8,52 @@ class MessageService
   end
 
 		
-	# Set up mailbox
-	def self.set_mailbox_settings email = nil, password = nil
-		Mail.defaults do
-  		retriever_method :pop3, :address    => "pop.gmail.com",
-		                          :port       => 995,
-		                          :user_name  => email,
-		                          :password   => password,
-		                          :enable_ssl => true
-			end
-	end
-
 	# Receive mails from mailbox, determined in set_mailbox_settings, 
 	# and save them to db. 
 	# Returns an error if connection was refused, nil otherwise.
 	# All errors are logged to message.log
-	def refresh_mail_list user_id = nil
+	def refresh_mail_list email, access_token, user_id
 		error = nil
 		
 		begin 
-			mails = Mail.all
+			imap = Net::IMAP.new('imap.gmail.com', 993, usessl = true, certs = nil, verify = false)
+				imap.authenticate('XOAUTH2', email, access_token)
+				imap.select('INBOX')
+				# imap.search(['ALL']).each do |message_id|
+				message_id = imap.search(['ALL']).first
 
-			mails.each do |mail|
+				msg = imap.fetch(message_id,'RFC822')[0].attr['RFC822']
+				mail = Mail.read_from_string msg
+
+		p '!' * 50
+				p mail.parts[0].body.decoded.force_encoding("ISO-8859-1").encode("UTF-8")
+				# p mail.parts[1].body
+
+				# p mail.body
+				p mail.subject
+				p mail.from
+				p mail.to
+				p mail.attachments
+
+		p '!' * 50
+
+
+
 				message = Message.create!(user_id: user_id, from: mail.from, 
-																	to: mail.to, body: mail.parts[0].body.decoded, 
+																	to: mail.to, body: mail.parts[0].body.decoded.force_encoding("ISO-8859-1").encode("UTF-8"), 
 																	date: mail.date, subject: mail.subject)
 			
-				mail.attachments.each do |attachment|
-					filename = save_attachment attachment
-					Document.create!(message: message, attachment_file_name: filename) 
-				end
-			end
+				# mail.attachments.each do |attachment|
+				# 	filename = save_attachment attachment
+				# 	Document.create!(message: message, attachment_file_name: filename) 
+				# end
+			# end
 
-		rescue Net::POPAuthenticationError => e
-			message_logger.debug e.message
-			error = e
+		# rescue Net::IMAPAuthenticationError => e
+		# 	message_logger.debug e.message
+		# 	error = e
 		rescue StandardError => e
+			p e
 			message_logger.debug e.message
 		end
 		
