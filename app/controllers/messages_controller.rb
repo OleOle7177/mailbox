@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
 			errors = service.refresh_mail_list(email, access_token, current_user.id)
 			
 			if errors.present?
-				flash[:error] = t 'refresh_mails.connection_refused.'
+				flash[:error] = t 'refresh_mails.failed.'
 			else 
 				flash[:success] = t 'refresh_mails.successfully_updated.'
 			end

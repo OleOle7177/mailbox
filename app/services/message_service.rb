@@ -19,41 +19,48 @@ class MessageService
 			imap = Net::IMAP.new('imap.gmail.com', 993, usessl = true, certs = nil, verify = false)
 				imap.authenticate('XOAUTH2', email, access_token)
 				imap.select('INBOX')
-				# imap.search(['ALL']).each do |message_id|
-				message_id = imap.search(['ALL']).first
+				imap.search(['ALL']).each do |message_id|
+				# message_id = imap.search(['ALL']).first
 
 				msg = imap.fetch(message_id,'RFC822')[0].attr['RFC822']
 				mail = Mail.read_from_string msg
 
-		p '!' * 50
-				p mail.parts[0].body.decoded.force_encoding("ISO-8859-1").encode("UTF-8")
-				# p mail.parts[1].body
+		# 		p mail.parts[0].body.decoded.force_encoding("ISO-8859-1").encode("UTF-8")
+		# 		# p mail.parts[1].body
 
+		p '!' * 50
 				# p mail.body
-				p mail.subject
-				p mail.from
-				p mail.to
-				p mail.attachments
+				# p mail.subject
+				# p mail.from
+				# p mail.to
+				# p mail.attachments
+				# p mail.parts[0].present?
+				# p mail.parts.length
+				p message_id
 
 		p '!' * 50
-
+		if mail.parts.size > 0
+			body = mail.parts[0].body.decoded.force_encoding("ISO-8859-1").encode("UTF-8")
+		else 
+			body = nil
+		end
 
 
 				message = Message.create!(user_id: user_id, from: mail.from, 
-																	to: mail.to, body: mail.parts[0].body.decoded.force_encoding("ISO-8859-1").encode("UTF-8"), 
+																	to: mail.to, body: body, 
 																	date: mail.date, subject: mail.subject)
 			
-				# mail.attachments.each do |attachment|
-				# 	filename = save_attachment attachment
-				# 	Document.create!(message: message, attachment_file_name: filename) 
-				# end
-			# end
+				mail.attachments.each do |attachment|
+					filename = save_attachment attachment
+					Document.create!(message: message, attachment_file_name: filename) 
+				end
+			end
 
 		# rescue Net::IMAPAuthenticationError => e
 		# 	message_logger.debug e.message
-		# 	error = e
+			# error = e
 		rescue StandardError => e
-			p e
+			error = e
 			message_logger.debug e.message
 		end
 		

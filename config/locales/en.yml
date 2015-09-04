@@ -15,7 +15,7 @@ en:
   log_in: "Log in"
   password_confirmation: "Password confirmation"
   refresh_mails:
-    connection_refused: "Connection refused: authentication error."
+    failed: "Connection refused: authentication error."
     successfully_updated: "Successfully updated."
   back: "back"
   next: "next"
