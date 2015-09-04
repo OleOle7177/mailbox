@@ -43,10 +43,10 @@ class MessageService
 																	to: mail.to, body: mail.parts[0].body.decoded.force_encoding("ISO-8859-1").encode("UTF-8"), 
 																	date: mail.date, subject: mail.subject)
 			
-				# mail.attachments.each do |attachment|
-				# 	filename = save_attachment attachment
-				# 	Document.create!(message: message, attachment_file_name: filename) 
-				# end
+			# 	mail.attachments.each do |attachment|
+			# 		filename = save_attachment attachment
+			# 		Document.create!(message: message, attachment_file_name: filename) 
+			# 	end
 			# end
 
 		# rescue Net::IMAPAuthenticationError => e
@@ -61,6 +61,12 @@ class MessageService
 	end
 
 	private
+
+	# Save messages
+	def save_message mail, gmail_id, user_id
+
+
+	end
 
 	# Save attachment to storage folder, 
 	# name of the attachment is updated with timestamp 
