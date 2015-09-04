@@ -2,6 +2,8 @@
 	<div class='container'>
 		<% if user_signed_in? %>
 			<%= link_to current_user.email, root_path, { class: "navbar-brand" } %>
+		<% else %>
+			<%= link_to t("google_sign_in"), user_omniauth_authorize_path(:google_oauth2),  { class: "navbar-brand" } %>
 		<% end %>
 
 			<ul class='nav navbar-nav navbar-right'>

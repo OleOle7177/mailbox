@@ -17,43 +17,26 @@ class MessageService
 		
 		begin 
 			imap = Net::IMAP.new('imap.gmail.com', 993, usessl = true, certs = nil, verify = false)
-				imap.authenticate('XOAUTH2', email, access_token)
-				imap.select('INBOX')
-				# imap.search(['ALL']).each do |message_id|
-				message_id = imap.search(['ALL']).first
+			imap.authenticate('XOAUTH2', email, access_token)
+			imap.select('INBOX')
 
+			# Array of all loaded messages for this user
+			gmail_ids = Message.current_user(user_id).pluck(:gmail_id)
+
+			if gmail_ids.blank? 
+				received_emails = imap.search(['ALL'])
+			else
+				received_emails = imap.search(['NOT', gmail_ids])
+			end
+
+			received_emails.each do |message_id|
 				msg = imap.fetch(message_id,'RFC822')[0].attr['RFC822']
 				mail = Mail.read_from_string msg
+				save_message(mail, message_id, user_id)
+			end
 
-		p '!' * 50
-				p mail.parts[0].body.decoded.force_encoding("ISO-8859-1").encode("UTF-8")
-				# p mail.parts[1].body
-
-				# p mail.body
-				p mail.subject
-				p mail.from
-				p mail.to
-				p mail.attachments
-
-		p '!' * 50
-
-
-
-				message = Message.create!(user_id: user_id, from: mail.from, 
-																	to: mail.to, body: mail.parts[0].body.decoded.force_encoding("ISO-8859-1").encode("UTF-8"), 
-																	date: mail.date, subject: mail.subject)
-			
-			# 	mail.attachments.each do |attachment|
-			# 		filename = save_attachment attachment
-			# 		Document.create!(message: message, attachment_file_name: filename) 
-			# 	end
-			# end
-
-		# rescue Net::IMAPAuthenticationError => e
-		# 	message_logger.debug e.message
-		# 	error = e
 		rescue StandardError => e
-			p e
+			error = e
 			message_logger.debug e.message
 		end
 		
@@ -64,8 +47,24 @@ class MessageService
 
 	# Save messages
 	def save_message mail, gmail_id, user_id
+		
+		if mail.parts.size > 0
+			body = mail.parts[0].body.decoded.force_encoding("ISO-8859-1").encode("UTF-8")
+		else 
+			body = nil
+		end
 
+		message = Message.create!(user_id: user_id, from: mail.from, 
+															to: mail.to, body: body, 
+															date: mail.date, subject: mail.subject,
+															gmail_id: gmail_id)
+	
+		mail.attachments.each do |attachment|
+			filename = save_attachment attachment
+			Document.create!(message: message, attachment_file_name: filename) 
+		end
 
+		message
 	end
 
 	# Save attachment to storage folder, 

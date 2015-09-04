@@ -272,7 +272,8 @@ ru:
   characters_minimum: "символов минимум"
   password_confirmation: "Подтвердите пароль"
   refresh_mails:
-    connection_refused: "Ошибка соединения: отказано в доступе."
+    failed: "При обновлении списка писем возникли ошибки."
     successfully_updated: "Список писем успешно обновлен."
   back: "назад"
   next: "вперед"
+  google_sign_in: "Войти через аккаунт Google"
