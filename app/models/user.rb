@@ -17,7 +17,8 @@ class User < ActiveRecord::Base
         email: data['email'],
         password: Devise.friendly_token[0,20],
         refresh_token: access_token['credentials']['refresh_token'],
-        token_expires_at: Time.now.utc + access_token['credentials']['expires_in'].to_i.seconds
+        # token_expires_at: Time.now.utc + access_token['credentials']['expires_at'].to_i.seconds
+        token_expires_at: Time.now.utc + 3600.seconds
       )
     end
     user
@@ -43,7 +44,8 @@ class User < ActiveRecord::Base
     body = JSON.parse response.body
 
     if body['access_token'].present?
-      self.token_expires_at = Time.now.utc + body['expires_in'].to_i.seconds
+      # self.token_expires_at = Time.now.utc + body['expires_in'].to_i.seconds
+      self.token_expires_at = Time.now.utc + 3600.seconds
       self.save!
     end
 

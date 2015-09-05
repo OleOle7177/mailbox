@@ -4,32 +4,7 @@ class MessagesController < ApplicationController
 
 	def index 
 		if params[:refresh] == 'true'
-			
-			auth = session["devise.google_data"]
-			
-			# Get new token if token expired
-			if Time.now.utc >= current_user.token_expires_at
-				begin 
-					auth["credentials"]["token"] = current_user.update_token
-				rescue StandardError => e
-					redirect_to root_path
-					reset_session
-				end
-			end
-
-			email = auth["info"]["email"]
-			access_token = auth["credentials"]["token"]
-
-			service = MessageService.new
-			errors = service.refresh_mail_list(email, access_token, current_user.id)
-			
-			if errors.present?
-				flash[:error] = t 'refresh_mails.failed.'
-			else 
-				flash[:success] = t 'refresh_mails.successfully_updated.'
-			end
-
-			flash.discard  
+			refresh_mails			
 		end
 
 		@messages = Message.current_user(current_user.id)
@@ -43,6 +18,33 @@ class MessagesController < ApplicationController
 
 	def download_attachment
 		send_file params[:path]
+	end
+
+	private 
+
+	def refresh_mails
+		auth = session["devise.google_data"]
+		
+		# Get new token if token expired
+		if Time.now.utc >= current_user.token_expires_at
+			begin 
+				auth["credentials"]["token"] = current_user.update_token
+			rescue StandardError => e
+				redirect_to root_path
+				reset_session
+			end
+		end
+
+		service = MessageService.new
+		errors = service.refresh_mail_list(auth["info"]["email"], auth["credentials"]["token"], current_user.id)
+		
+		if errors.present?
+			flash[:error] = t 'refresh_mails.failed.'
+		else 
+			flash[:success] = t 'refresh_mails.successfully_updated.'
+		end
+
+		flash.discard  
 	end
 
 end
