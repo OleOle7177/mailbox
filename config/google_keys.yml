@@ -1,0 +1,11 @@
+development:
+  google_key: "917203017409-e5iom3eqfg98jean32om4v86v35rssbn.apps.googleusercontent.com"
+  google_secret: "mUMUpD9rdrohBltCyoQgBBMq"
+
+production:
+  google_key: "917203017409-e5iom3eqfg98jean32om4v86v35rssbn.apps.googleusercontent.com"
+  google_secret: "mUMUpD9rdrohBltCyoQgBBMq"
+
+test:
+  google_key: "917203017409-e5iom3eqfg98jean32om4v86v35rssbn.apps.googleusercontent.com"
+  google_secret: "mUMUpD9rdrohBltCyoQgBBMq"

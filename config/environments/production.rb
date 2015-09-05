@@ -1,3 +1,5 @@
+GOOGLE_CONFIG = YAML.load_file("#{::Rails.root}/config/google_keys.yml")[::Rails.env]
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 

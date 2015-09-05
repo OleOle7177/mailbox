@@ -16,7 +16,7 @@
 !/log/.keep
 /tmp
 
-/config/google_keys.yml
+# /config/google_keys.yml
 
 /storage
 /storage/*

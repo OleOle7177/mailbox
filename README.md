@@ -10,8 +10,8 @@
 
 Создайте базу данных и запустите миграции: 
 
-	$ rake db:create 
-	$ rake db:migrate
+	$ rake db:create
+	$ rake db:schema:load 
 
 Запустите приложение: 
 
@@ -46,8 +46,8 @@ Install gems with bundler:
 
 Create database and run migrations: 
 
-	$ rake db:create 
-	$ rake db:migrate
+	$ rake db:create
+	$ rake db:schema:load 
 
 Launch the application: 
 
