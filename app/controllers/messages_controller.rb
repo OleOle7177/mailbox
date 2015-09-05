@@ -9,7 +9,12 @@ class MessagesController < ApplicationController
 			
 			# Get new token if token expired
 			if Time.now.utc >= current_user.token_expires_at
-				auth["credentials"]["token"] = current_user.update_token
+				begin 
+					auth["credentials"]["token"] = current_user.update_token
+				rescue StandardError => e
+					redirect_to root_path
+					reset_session
+				end
 			end
 
 			email = auth["info"]["email"]

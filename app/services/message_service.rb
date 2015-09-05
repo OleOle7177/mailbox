@@ -76,7 +76,7 @@ class MessageService
   		FileUtils.mkdir_p(attachment_dir)
 		end
 
-		new_filename = "#{Time.zone.now.to_i}_" + attachment.filename 
+		new_filename = "#{Time.now.utc.to_i}_" + attachment.filename 
 
     File.open(attachment_dir + '/'+ new_filename, "w+b", 0644) do |f|
     	f.write attachment.body.decoded
