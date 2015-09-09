@@ -4,8 +4,8 @@ class MessageService
 
 	# Create or initialize message logger
 	def message_logger
-    @@message_logger ||= Logger.new("#{Rails.root}/log/mail.log")
-  end
+    		@@message_logger ||= Logger.new("#{Rails.root}/log/mail.log")
+  	end
 
 		
 	# Receive mails from mailbox, determined in set_mailbox_settings, 
