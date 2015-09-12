@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :users, skip: [:session, :password, :registration, :confirmation], controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  scope '(:locale)', locale: /#{I18n.available_locales.join("|")}/ do
+  scope ':locale', locale: /#{I18n.available_locales.join("|")}/ do
 		root to: "messages#index"  
 
 	  devise_for :users, path: '', skip: :omniauth_callbacks, 
