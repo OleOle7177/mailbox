@@ -19,15 +19,17 @@
 
 ## Работа с приложением: 
 
-Для того, чтобы иметь возможность просматривать почту gmail-аккаунта, при регистрации необходимо указывать связку почта-пароль такую же, как и в действительном почтовом ящике. 
+Для авторизации используется протокол OAuth 2.0: пользователь перенаправляется на страницу google для логина (получение токена), а после возвращается обратно в приложение. 
 
-Кроме того, в аккаунте пользователя на gmail необходимо разрешить доступ к почте сторонним приложениям. 
+В аккаунте пользователя на gmail необходимо разрешить доступ к почте сторонним приложениям. 
 
 ## Особенности реализации:
 
 При получении почты с сервера и сохранении сообщений в локальную базу данных все ошибки логгируются в файл mail.log. 
 
 Все прикрепленные к сообщениям файлы хранятся в папке storage (в корне приложения).
+
+Секретный ключи приложения должны хранятся в файле google_keys.yml (удалены из репозитория). 
 
 ## Тестирование: 
 
@@ -55,9 +57,11 @@ Launch the application:
 
 ## Start: 
 
-You should register with real email address and password exactly the same as on gmail account you want to work with. 
+Authorization is built with the OAuth 2.0 scheme: user is redirected to google for login (get access token) and then comes back to application. 
 
 You should also give an access to unsafe applications in your gmail account.
+
+Secret keys of application should be stored in google_keys.yml (deleted from repo).
 
 ## Features:
 
